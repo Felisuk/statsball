@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#f97316">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Stats Bàsquet">
+<title>Stats Bàsquet</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080d1a;
+  --bg2: #0f1629;
+  --bg3: #151e36;
+  --bg4: #1c2740;
+  --accent: #f97316;
+  --accent2: #fb923c;
+  --text: #f0f4ff;
+  --text2: #8896b3;
+  --text3: #4a5568;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --border: rgba(255,255,255,0.07);
+  --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; overflow-x: hidden; }
+
+/* LAYOUT */
+.app { display: flex; flex-direction: column; min-height: 100vh; max-width: 480px; margin: 0 auto; }
+header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 14px 16px 12px; position: sticky; top: 0; z-index: 100; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 34px; height: 34px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+.logo-icon svg { width: 20px; height: 20px; fill: #fff; }
+.logo-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: .5px; color: var(--text); }
+.logo-title span { color: var(--accent); }
+.nav { display: flex; gap: 4px; }
+.nav-btn { background: none; border: none; color: var(--text2); font-size: 13px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .5px; padding: 6px 10px; border-radius: 6px; cursor: pointer; transition: all .15s; }
+.nav-btn.active { background: var(--accent); color: #fff; }
+.main { flex: 1; padding: 16px; }
+
+/* SCREENS */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* INPUT SCREEN */
+.input-label { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text2); margin-bottom: 8px; }
+.format-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.format-btn { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 10px 6px; text-align: center; cursor: pointer; transition: all .15s; }
+.format-btn.active { border-color: var(--accent); background: rgba(249,115,22,.12); }
+.format-btn .fnum { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--accent); }
+.format-btn .flabel { font-size: 11px; color: var(--text2); margin-top: 2px; }
+textarea { width: 100%; min-height: 200px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 13px; padding: 12px; resize: vertical; outline: none; transition: border .15s; }
+textarea:focus { border-color: var(--accent); }
+textarea::placeholder { color: var(--text3); }
+.team-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+.team-input-block label { font-size: 11px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--text2); display: block; margin-bottom: 5px; }
+.team-input-block input { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 14px; padding: 9px 12px; outline: none; transition: border .15s; }
+.team-input-block input:focus { border-color: var(--accent); }
+.btn-primary { width: 100%; background: var(--accent); border: none; border-radius: var(--radius); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 1px; padding: 14px; cursor: pointer; transition: all .15s; margin-top: 10px; }
+.btn-primary:active { transform: scale(.98); background: var(--accent2); }
+.error { background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.3); border-radius: 8px; color: #fca5a5; font-size: 13px; padding: 10px 14px; margin-top: 10px; display: none; }
+
+/* RESULTS SCREEN */
+.score-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; text-align: center; position: relative; overflow: hidden; }
+.score-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+.score-teams { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.score-team { flex: 1; }
+.score-team-name { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .5px; color: var(--text2); text-transform: uppercase; margin-bottom: 4px; }
+.score-pts { font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 800; line-height: 1; color: var(--text); }
+.score-pts.winner { color: var(--accent); }
+.score-sep { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; color: var(--text3); }
+.score-meta { font-size: 11px; color: var(--text3); margin-top: 8px; letter-spacing: .5px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 16px; }
+.stat-mini { background: var(--bg3); border-radius: 8px; padding: 10px 8px; text-align: center; }
+.stat-mini-val { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--accent); }
+.stat-mini-lbl { font-size: 10px; color: var(--text2); margin-top: 2px; letter-spacing: .5px; text-transform: uppercase; }
+
+.team-block { margin-bottom: 20px; }
+.team-block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.team-block-name { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: var(--text); }
+.team-block-pts { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); background: rgba(249,115,22,.12); padding: 3px 10px; border-radius: 20px; }
+
+.player-table { width: 100%; border-collapse: collapse; }
+.player-table thead th { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); padding: 6px 8px; text-align: right; border-bottom: 1px solid var(--border); }
+.player-table thead th:first-child { text-align: left; }
+.player-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background .1s; }
+.player-table tbody tr:active { background: var(--bg3); }
+.player-table tbody td { padding: 9px 8px; text-align: right; font-size: 14px; color: var(--text); }
+.player-table tbody td:first-child { text-align: left; }
+.player-num { display: inline-block; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: var(--text3); background: var(--bg4); padding: 1px 5px; border-radius: 4px; margin-right: 5px; }
+.player-name { font-size: 13px; }
+.pts-hi { color: var(--green); font-weight: 600; font-family: 'Barlow Condensed', sans-serif; font-size: 16px; }
+.foul-hi { color: var(--yellow); font-weight: 600; }
+.foul-out { color: var(--red); font-weight: 600; }
+.total-row td { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: var(--text2); border-top: 1px solid var(--border); padding-top: 8px; }
+
+.btn-secondary { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .5px; padding: 12px 20px; cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-secondary:active { background: var(--bg4); }
+.btn-row { display: flex; gap: 8px; margin-top: 16px; }
+.btn-row .btn-secondary { flex: 1; justify-content: center; }
+
+/* HISTORY SCREEN */
+.history-empty { text-align: center; padding: 40px 20px; color: var(--text3); font-size: 14px; }
+.history-item { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; cursor: pointer; transition: all .15s; }
+.history-item:active { border-color: var(--accent); }
+.history-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.history-date { font-size: 11px; color: var(--text3); }
+.history-score { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color: var(--accent); }
+.history-teams { font-size: 13px; color: var(--text2); }
+.history-del { background: none; border: none; color: var(--text3); font-size: 18px; cursor: pointer; padding: 4px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13H9v6l5.25 3.15.75-1.23-4.5-2.67z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <span class="logo-title">Stats<span>Ball</span></span>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn active" onclick="showScreen('input')">Nou</button>
+        <button class="nav-btn" onclick="showScreen('results')" id="nav-results" style="display:none">Stats</button>
+        <button class="nav-btn" onclick="showScreen('history')">Historial</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- INPUT SCREEN -->
+    <div class="screen active" id="screen-input">
+      <div class="input-label" style="margin-bottom:10px">Format del partit</div>
+      <div class="format-row" id="formatRow">
+        <div class="format-btn active" data-periods="4" data-pmins="10" onclick="selectFormat(this)">
+          <div class="fnum">4</div>
+          <div class="flabel">× 10 min</div>
+        </div>
+        <div class="format-btn" data-periods="8" data-pmins="6" onclick="selectFormat(this)">
+          <div class="fnum">8</div>
+          <div class="flabel">× 6 min</div>
+        </div>
+        <div class="format-btn" data-periods="4" data-pmins="8" onclick="selectFormat(this)">
+          <div class="fnum">4</div>
+          <div class="flabel">× 8 min</div>
+        </div>
+      </div>
+
+      <div class="team-inputs">
+        <div class="team-input-block">
+          <label>Equip local</label>
+          <input type="text" id="teamHome" placeholder="Nom equip local">
+        </div>
+        <div class="team-input-block">
+          <label>Equip visitant</label>
+          <input type="text" id="teamAway" placeholder="Nom equip visitant">
+        </div>
+      </div>
+
+      <div class="input-label">Jugadors equip local (un per línia)</div>
+      <textarea id="homePlayersInput" placeholder="BRAIS DURAN&#10;NIKOLOZ GIORGASHVILI&#10;ERIC SEOANE&#10;..." style="min-height:100px;margin-bottom:14px"></textarea>
+
+      <div class="input-label">Cronologia del partit</div>
+      <textarea id="chronoInput" placeholder="Enganxa aquí el text de la cronologia del partit...&#10;&#10;Exemple:&#10;#18 BIEL CATEVILLA VILLANUEVA&#10;Cistella de 2&#10;Min: 2 Període: 1 Marcador: 0-2&#10;..."></textarea>
+
+      <div class="error" id="errorMsg">No s'han trobat jugadors o accions. Comprova el format de la cronologia.</div>
+      <button class="btn-primary" onclick="processData()">▶ ANALITZAR PARTIT</button>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div class="screen" id="screen-results">
+      <div id="resultsContent"></div>
+    </div>
+
+    <!-- HISTORY SCREEN -->
+    <div class="screen" id="screen-history">
+      <div id="historyContent"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+let currentFormat = { periods: 4, pmins: 10 };
+let currentData = null;
+
+function selectFormat(el) {
+  document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentFormat = { periods: parseInt(el.dataset.periods), pmins: parseInt(el.dataset.pmins) };
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  event && event.target.classList.add('active');
+  if (name === 'history') renderHistory();
+}
+
+function absMin(period, min) {
+  return (period - 1) * currentFormat.pmins + min;
+}
+
+function processData() {
+  const text = document.getElementById('chronoInput').value.trim();
+  const homePlayersRaw = document.getElementById('homePlayersInput').value.trim();
+  const teamHome = document.getElementById('teamHome').value.trim() || 'Equip local';
+  const teamAway = document.getElementById('teamAway').value.trim() || 'Equip visitant';
+  const errEl = document.getElementById('errorMsg');
+  errEl.style.display = 'none';
+
+  if (!text) { errEl.style.display = 'block'; errEl.textContent = 'Enganxa la cronologia del partit.'; return; }
+
+  const homePhrases = homePlayersRaw.split('\n').map(l => l.trim().toUpperCase()).filter(Boolean);
+
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const players = {};
+  const ptMap = { '1': 1, '2': 2, '3': 3 };
+  let finalHome = 0, finalAway = 0;
+
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    const pm = line.match(/^#(\S+)\s+(.+)$/);
+    if (!pm) { i++; continue; }
+    const num = pm[1];
+    const nameRaw = pm[2].trim();
+    const action = lines[i + 1] || '';
+    const metaLine = lines[i + 2] || '';
+    const mm = metaLine.match(/Min:\s*(\d+)\s*Per[íi]ode:\s*(\d+)\s*Marcador:\s*(\d+)-(\d+)/i);
+
+    if (!mm && !action.match(/Min:/i)) { i++; continue; }
+
+    const metaResolved = mm || (lines[i+1]||'').match(/Min:\s*(\d+)\s*Per[íi]ode:\s*(\d+)\s*Marcador:\s*(\d+)-(\d+)/i);
+    const actionResolved = mm ? action : '';
+    const actualMeta = mm ? mm : (lines[i+1]||'').match(/Min:\s*(\d+)\s*Per[íi]ode:\s*(\d+)\s*Marcador:\s*(\d+)-(\d+)/i);
+
+    if (!actualMeta) { i++; continue; }
+
+    const period = parseInt(actualMeta[2]);
+    const minInP = parseInt(actualMeta[1]);
+    const t = absMin(period, minInP);
+    finalHome = Math.max(finalHome, parseInt(actualMeta[3]));
+    finalAway = Math.max(finalAway, parseInt(actualMeta[4]));
+
+    const key = num;
+    if (!players[key]) {
+      const nameUp = nameRaw.toUpperCase();
+      const isHome = homePhrases.length === 0 ? null :
+        homePhrases.some(ph => nameUp.includes(ph) || ph.split(' ').some(w => w.length > 3 && nameUp.includes(w)));
+      players[key] = { num: '#' + num, name: nameRaw, pts: 0, fouls: 0, isHome, intervals: [], onCourt: null };
+    }
+    const p = players[key];
+    const act = actionResolved.toLowerCase();
+
+    const cm = actionResolved.match(/[Cc]istella de (\d)/);
+    if (cm) p.pts += ptMap[cm[1]] || 0;
+    if (/falta/i.test(actionResolved) && !/sense falta/i.test(actionResolved)) p.fouls++;
+    if (/entra al camp/i.test(actionResolved)) p.onCourt = t;
+    if (/surt del camp/i.test(actionResolved)) {
+      if (p.onCourt !== null) { p.intervals.push([p.onCourt, t]); p.onCourt = null; }
+    }
+
+    i += (mm ? 3 : 2);
+  }
+
+  const allPlayers = Object.values(players);
+  if (allPlayers.length === 0) { errEl.style.display = 'block'; return; }
+
+  allPlayers.forEach(p => {
+    if (p.onCourt !== null) p.intervals.push([p.onCourt, currentFormat.periods * currentFormat.pmins]);
+    p.mins = p.intervals.length > 0
+      ? p.intervals.reduce((s,[a,b]) => s + (b-a), 0)
+      : (p.pts > 0 || p.fouls > 0 ? currentFormat.pmins : 0);
+  });
+
+  const lastScoreLine = [...text.matchAll(/Marcador:\s*(\d+)-(\d+)/gi)].pop();
+  if (lastScoreLine) { finalHome = parseInt(lastScoreLine[1]); finalAway = parseInt(lastScoreLine[2]); }
+
+  currentData = { allPlayers, finalHome, finalAway, teamHome, teamAway };
+  renderResults(currentData);
+  saveToHistory(currentData);
+
+  document.getElementById('nav-results').style.display = '';
+  showScreen('results');
+  document.querySelector('[onclick="showScreen(\'results\')"]').classList.add('active');
+  document.querySelector('[onclick="showScreen(\'input\')"]').classList.remove('active');
+}
+
+function renderResults(data) {
+  const { allPlayers, finalHome, finalAway, teamHome, teamAway } = data;
+  const homePlayers = allPlayers.filter(p => p.isHome === true || (p.isHome === null));
+  const awayPlayers = allPlayers.filter(p => p.isHome === false);
+  const noTeam = allPlayers.filter(p => p.isHome === null);
+
+  const homeGroup = homePlayers.length > 0 ? homePlayers : noTeam.slice(0, Math.ceil(noTeam.length/2));
+  const awayGroup = awayPlayers.length > 0 ? awayPlayers : noTeam.slice(Math.ceil(noTeam.length/2));
+
+  const totalFouls = allPlayers.reduce((s,p)=>s+p.fouls,0);
+  const topScorer = [...allPlayers].sort((a,b)=>b.pts-a.pts)[0];
+  const winner = finalHome > finalAway ? 'home' : finalAway > finalHome ? 'away' : 'tie';
+
+  document.getElementById('resultsContent').innerHTML = `
+    <div class="score-card">
+      <div class="score-teams">
+        <div class="score-team">
+          <div class="score-team-name">${teamHome}</div>
+          <div class="score-pts ${winner==='home'?'winner':''}">${finalHome}</div>
+        </div>
+        <div class="score-sep">–</div>
+        <div class="score-team">
+          <div class="score-team-name">${teamAway}</div>
+          <div class="score-pts ${winner==='away'?'winner':''}">${finalAway}</div>
+        </div>
+      </div>
+      <div class="score-meta">${currentFormat.periods} períodes × ${currentFormat.pmins} min · ${allPlayers.length} jugadors</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-mini"><div class="stat-mini-val">${allPlayers.reduce((s,p)=>s+p.pts,0)}</div><div class="stat-mini-lbl">Punts totals</div></div>
+      <div class="stat-mini"><div class="stat-mini-val">${totalFouls}</div><div class="stat-mini-lbl">Faltes totals</div></div>
+      <div class="stat-mini"><div class="stat-mini-val">${topScorer ? topScorer.pts : 0}</div><div class="stat-mini-lbl">${topScorer ? topScorer.name.split(' ')[0] : '-'}</div></div>
+    </div>
+
+    ${buildTeamBlock(homeGroup, teamHome)}
+    ${buildTeamBlock(awayGroup, teamAway)}
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="exportCSV()">↓ CSV</button>
+      <button class="btn-secondary" onclick="shareResults()">↑ Compartir</button>
+      <button class="btn-secondary" onclick="showScreen('input');document.querySelector('[onclick=\\'showScreen(\\'input\\')\\'').classList.add('active')">+ Nou</button>
+    </div>
+  `;
+}
+
+function buildTeamBlock(players, name) {
+  if (!players.length) return '';
+  const sorted = [...players].sort((a,b) => b.pts - a.pts);
+  const totalPts = players.reduce((s,p)=>s+p.pts,0);
+  const totalFouls = players.reduce((s,p)=>s+p.fouls,0);
+  const rows = sorted.map(p => {
+    const fc = p.fouls >= 5 ? 'foul-out' : p.fouls >= 4 ? 'foul-hi' : '';
+    const pc = p.pts >= 15 ? 'pts-hi' : '';
+    return `<tr>
+      <td><span class="player-num">${p.num}</span><span class="player-name">${p.name.split(' ').slice(0,2).join(' ')}</span></td>
+      <td class="${pc}">${p.pts}</td>
+      <td class="${fc}">${p.fouls}${p.fouls>=5?' ✕':''}</td>
+      <td>${p.mins}'</td>
+    </tr>`;
+  }).join('');
+  return `
+    <div class="team-block">
+      <div class="team-block-header">
+        <span class="team-block-name">${name}</span>
+        <span class="team-block-pts">${totalPts} pts</span>
+      </div>
+      <table class="player-table">
+        <thead><tr><th>Jugador</th><th>Pts</th><th>F</th><th>Min</th></tr></thead>
+        <tbody>
+          ${rows}
+          <tr class="total-row"><td>Total</td><td>${totalPts}</td><td>${totalFouls}</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>`;
+}
+
+function exportCSV() {
+  if (!currentData) return;
+  const rows = [['Equip','Número','Nom','Punts','Faltes','Minuts']];
+  currentData.allPlayers.sort((a,b)=>b.pts-a.pts).forEach(p => {
+    const team = p.isHome ? currentData.teamHome : currentData.teamAway;
+    rows.push([team, p.num, p.name, p.pts, p.fouls, p.mins]);
+  });
+  const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g,'""') + '"').join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
+  a.download = 'estadistiques.csv'; a.click();
+}
+
+function shareResults() {
+  if (!currentData) return;
+  const { finalHome, finalAway, teamHome, teamAway, allPlayers } = currentData;
+  const top = [...allPlayers].sort((a,b)=>b.pts-a.pts).slice(0,3);
+  const text = `🏀 ${teamHome} ${finalHome} – ${finalAway} ${teamAway}\n\nTop anotadors:\n${top.map((p,i)=>`${i+1}. ${p.name.split(' ')[0]} – ${p.pts} pts`).join('\n')}\n\nStatsball App`;
+  if (navigator.share) navigator.share({ title: 'Estadístiques', text });
+  else { navigator.clipboard && navigator.clipboard.writeText(text); alert('Copiat al portapapers!'); }
+}
+
+function saveToHistory(data) {
+  const history = JSON.parse(localStorage.getItem('statsball_history') || '[]');
+  history.unshift({ ...data, date: new Date().toLocaleDateString('ca-ES') });
+  localStorage.setItem('statsball_history', JSON.stringify(history.slice(0, 20)));
+}
+
+function renderHistory() {
+  const history = JSON.parse(localStorage.getItem('statsball_history') || '[]');
+  const el = document.getElementById('historyContent');
+  if (!history.length) {
+    el.innerHTML = '<div class="history-empty">Encara no hi ha partits guardats.<br>Analitza el teu primer partit!</div>';
+    return;
+  }
+  el.innerHTML = history.map((d, i) => `
+    <div class="history-item" onclick="loadFromHistory(${i})">
+      <div class="history-meta">
+        <span class="history-date">${d.date}</span>
+        <span class="history-score">${d.finalHome}–${d.finalAway}</span>
+      </div>
+      <div class="history-teams">${d.teamHome} vs ${d.teamAway}</div>
+    </div>
+  `).join('');
+}
+
+function loadFromHistory(i) {
+  const history = JSON.parse(localStorage.getItem('statsball_history') || '[]');
+  currentData = history[i];
+  renderResults(currentData);
+  document.getElementById('nav-results').style.display = '';
+  showScreen('results');
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
