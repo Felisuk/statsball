@@ -11,27 +11,10 @@
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:    #080d1a;
-  --bg2:   #0f1629;
-  --bg3:   #151e36;
-  --bg4:   #1c2740;
-  --acc:   #f97316;
-  --acc2:  #fb923c;
-  --text:  #f0f4ff;
-  --text2: #8896b3;
-  --text3: #4a5568;
-  --green: #22c55e;
-  --red:   #ef4444;
-  --yellow:#eab308;
-  --border:rgba(255,255,255,0.07);
-  --r:     12px;
-}
+:root{--bg:#080d1a;--bg2:#0f1629;--bg3:#151e36;--bg4:#1c2740;--acc:#f97316;--acc2:#fb923c;--text:#f0f4ff;--text2:#8896b3;--text3:#4a5568;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--border:rgba(255,255,255,0.07);--r:12px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;overflow-x:hidden}
 .app{display:flex;flex-direction:column;min-height:100vh;max-width:480px;margin:0 auto}
-
-/* HEADER */
 header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:0;z-index:100}
 .header-inner{display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:8px}
@@ -41,36 +24,28 @@ header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 
 .nav{display:flex;gap:3px}
 .nav-btn{background:none;border:none;color:var(--text2);font-size:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.5px;padding:6px 9px;border-radius:6px;cursor:pointer;transition:all .15s;white-space:nowrap}
 .nav-btn.active{background:var(--acc);color:#fff}
-
-/* SCREENS */
 .main{flex:1;padding:16px}
 .screen{display:none}.screen.active{display:block}
-
-/* FORM ELEMENTS */
 .lbl{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:6px;display:block}
+.mb8{margin-bottom:8px}.mb14{margin-bottom:14px}.mb16{margin-bottom:16px}
 input[type=text],input[type=url],textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;padding:10px 12px;outline:none;transition:border .15s}
 input[type=text]:focus,input[type=url]:focus,textarea:focus{border-color:var(--acc)}
 input::placeholder,textarea::placeholder{color:var(--text3)}
 textarea{resize:vertical;min-height:180px;font-size:13px}
-.mb8{margin-bottom:8px}.mb14{margin-bottom:14px}.mb16{margin-bottom:16px}
-
-/* TEAM SELECTOR */
-.team-selector{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:2px}
+.team-selector{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
 .team-chip{flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:20px;color:var(--text2);font-size:12px;font-weight:600;padding:6px 14px;cursor:pointer;transition:all .15s;white-space:nowrap}
 .team-chip.active{background:rgba(249,115,22,.15);border-color:var(--acc);color:var(--acc)}
-.team-chip.add-team{border-style:dashed}
-
-/* BUTTONS */
+.team-chip.add-btn{border-style:dashed}
+.side-toggle{display:none;gap:8px;margin-bottom:14px}
+.side-btn{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:13px;font-weight:600;padding:9px;cursor:pointer;transition:all .15s;text-align:center}
+.side-btn.active{background:var(--acc);border-color:var(--acc);color:#fff}
 .btn-primary{width:100%;background:var(--acc);border:none;border-radius:var(--r);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:1px;padding:14px;cursor:pointer;transition:all .15s;margin-top:10px}
-.btn-primary:active{transform:scale(.98);background:var(--acc2)}
+.btn-primary:active{transform:scale(.98)}
 .btn-secondary{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;padding:11px 16px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
-.btn-secondary:active{background:var(--bg4)}
+.btn-sm{font-size:12px;padding:7px 12px;border-radius:8px}
 .btn-row{display:flex;gap:8px;margin-top:14px}
 .btn-row .btn-secondary{flex:1;justify-content:center}
-.btn-sm{font-size:12px;padding:7px 12px;border-radius:8px}
 .error{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:8px;color:#fca5a5;font-size:13px;padding:10px 14px;margin-top:10px;display:none}
-
-/* SCORE CARD */
 .score-card{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden}
 .score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
 .score-teams{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -79,15 +54,11 @@ textarea{resize:vertical;min-height:180px;font-size:13px}
 .score-num{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:800;line-height:1}
 .score-num.winner{color:var(--acc)}
 .score-sep{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--text3)}
-.score-meta{font-size:11px;color:var(--text3);margin-top:8px;letter-spacing:.3px}
-
-/* SUMMARY CARDS */
+.score-meta{font-size:11px;color:var(--text3);margin-top:8px}
 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
 .stat-mini{background:var(--bg3);border-radius:8px;padding:10px 8px;text-align:center}
 .stat-mini-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--acc)}
 .stat-mini-lbl{font-size:10px;color:var(--text2);margin-top:2px;letter-spacing:.5px;text-transform:uppercase}
-
-/* TEAM TABLE */
 .team-block{margin-bottom:20px}
 .team-block-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .team-block-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
@@ -104,27 +75,22 @@ tbody td:first-child{text-align:left}
 .foul-out{color:var(--red);font-weight:600}
 .zero{color:var(--text3)}
 .total-row td{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--text2);border-top:.5px solid var(--border);padding-top:8px}
-.divider{border:none;border-top:.5px solid var(--border);margin:16px 0}
-
-/* HISTORY */
 .history-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px;line-height:1.6}
-.history-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;cursor:pointer;transition:border .15s;display:flex;align-items:center;justify-content:space-between}
+.history-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
 .history-item:active{border-color:var(--acc)}
-.history-left{}
 .history-date{font-size:11px;color:var(--text3);margin-bottom:4px}
-.history-teams{font-size:14px;font-weight:500;color:var(--text)}
+.history-teams{font-size:14px;font-weight:500}
 .history-score{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--acc)}
 .history-del{background:none;border:none;color:var(--text3);font-size:16px;cursor:pointer;padding:4px 8px}
-
-/* MY TEAM */
 .my-team-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:12px}
 .my-team-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.my-team-card-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.my-team-card-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
 .my-team-actions{display:flex;gap:6px}
 .player-tag{display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border-radius:20px;padding:4px 10px;font-size:12px;margin:3px;color:var(--text2)}
 .player-tag .tag-num{color:var(--acc);font-weight:700;font-size:11px}
 .add-team-form{background:var(--bg2);border:1px dashed var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
-.add-team-form h3{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:14px;color:var(--text2);text-transform:uppercase}
+.add-team-form h3{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:14px;color:var(--text2);text-transform:uppercase}
+.quick-add-form{background:var(--bg3);border:1px solid var(--acc);border-radius:10px;padding:14px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -136,54 +102,62 @@ tbody td:first-child{text-align:left}
         <span class="logo-title">Stats<span>Ball</span></span>
       </div>
       <nav class="nav">
-        <button class="nav-btn active" id="nav-nou"      onclick="showScreen('nou')">Nou</button>
-        <button class="nav-btn"        id="nav-results"  onclick="showScreen('results')" style="display:none">Stats</button>
-        <button class="nav-btn"        id="nav-myteam"   onclick="showScreen('myteam')">El meu equip</button>
-        <button class="nav-btn"        id="nav-history"  onclick="showScreen('history')">Historial</button>
+        <button class="nav-btn active" id="nav-nou"     onclick="showScreen('nou')">Nou</button>
+        <button class="nav-btn" id="nav-results"        onclick="showScreen('results')" style="display:none">Stats</button>
+        <button class="nav-btn" id="nav-myteam"         onclick="showScreen('myteam')">El meu equip</button>
+        <button class="nav-btn" id="nav-history"        onclick="showScreen('history')">Historial</button>
       </nav>
     </div>
   </header>
 
   <main class="main">
 
-    <!-- ── NOU PARTIT ── -->
+    <!-- NOU PARTIT -->
     <div class="screen active" id="screen-nou">
-
-      <span class="lbl mb8">Equip local (el meu equip)</span>
+      <span class="lbl mb8">El meu equip</span>
       <div class="team-selector" id="teamSelector"></div>
 
-      <div id="manualTeamSection">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="mb14">
-          <div>
-            <span class="lbl mb8">Nom equip local</span>
-            <input type="text" id="teamHome" placeholder="Equip local">
-          </div>
-          <div>
-            <span class="lbl mb8">Nom equip visitant</span>
-            <input type="text" id="teamAway" placeholder="Equip visitant">
-          </div>
+      <div id="sideToggle" style="display:none;margin-bottom:14px">
+        <span class="lbl mb8">Juga com a...</span>
+        <div style="display:flex;gap:8px">
+          <button id="sideHome" class="side-btn active" onclick="selectSide('home')">🏠 Local</button>
+          <button id="sideAway" class="side-btn"        onclick="selectSide('away')">✈️ Visitant</button>
         </div>
-        <span class="lbl mb8">Jugadors equip local (un per línia, format: #52 NOM o NOM)</span>
-        <textarea id="homePlayersInput" style="min-height:90px" class="mb14" placeholder="#52 BRAIS DURAN&#10;#8 ERIC SEOANE&#10;..."></textarea>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="mb14">
+        <div>
+          <span class="lbl mb8">Equip local</span>
+          <input type="text" id="teamHome" placeholder="Equip local">
+        </div>
+        <div>
+          <span class="lbl mb8">Equip visitant</span>
+          <input type="text" id="teamAway" placeholder="Equip visitant">
+        </div>
+      </div>
+
+      <div id="manualPlayersSection">
+        <span class="lbl mb8">Jugadors equip local (un per línia, nom i cognom)</span>
+        <textarea id="homePlayersInput" style="min-height:80px" class="mb14" placeholder="#52 BRAIS DURAN&#10;#8 ERIC SEOANE&#10;..."></textarea>
       </div>
 
       <span class="lbl mb8">Cronologia del partit</span>
-      <textarea id="chronoInput" placeholder="Enganxa aquí el text de la cronologia...&#10;&#10;#18 BIEL CATEVILLA VILLANUEVA&#10;Cistella de 2&#10;Min: &#10;2&#10; Període: &#10;1&#10; Marcador: &#10;0-2"></textarea>
+      <textarea id="chronoInput" placeholder="Enganxa aquí el text de la cronologia..."></textarea>
       <div class="error" id="errorMsg"></div>
       <button class="btn-primary" onclick="processData()">▶ ANALITZAR PARTIT</button>
     </div>
 
-    <!-- ── RESULTS ── -->
+    <!-- RESULTS -->
     <div class="screen" id="screen-results">
       <div id="resultsContent"></div>
     </div>
 
-    <!-- ── EL MEU EQUIP ── -->
+    <!-- EL MEU EQUIP -->
     <div class="screen" id="screen-myteam">
       <div id="myteamContent"></div>
     </div>
 
-    <!-- ── HISTORIAL ── -->
+    <!-- HISTORIAL -->
     <div class="screen" id="screen-history">
       <div id="historyContent"></div>
     </div>
@@ -192,18 +166,20 @@ tbody td:first-child{text-align:left}
 </div>
 
 <script>
-// ─── CONSTANTS ───────────────────────────────────────────────
-const PERIOD_MINS = 6;
-const NUM_PERIODS = 8;
+// ── CONSTANTS ──────────────────────────────────────────────────
+const PERIOD_MINS    = 6;
+const NUM_PERIODS    = 8;
 const STORAGE_TEAMS  = 'sb_teams';
 const STORAGE_HIST   = 'sb_history';
 const STORAGE_ACTIVE = 'sb_active_team';
+const STORAGE_SIDE   = 'sb_side';
 
-// ─── STATE ───────────────────────────────────────────────────
+// ── STATE ──────────────────────────────────────────────────────
 let currentData   = null;
 let activeTeamIdx = null;
+let activeSide    = 'home'; // 'home' | 'away'
 
-// ─── NAVIGATION ──────────────────────────────────────────────
+// ── NAVIGATION ─────────────────────────────────────────────────
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -214,25 +190,24 @@ function showScreen(name) {
   if (name === 'nou')     renderTeamSelector();
 }
 
-// ─── TEAMS STORAGE ───────────────────────────────────────────
+// ── TEAMS STORAGE ──────────────────────────────────────────────
 function getTeams() {
   try { return JSON.parse(localStorage.getItem(STORAGE_TEAMS) || '[]'); }
   catch { return []; }
 }
-function saveTeams(teams) {
-  localStorage.setItem(STORAGE_TEAMS, JSON.stringify(teams));
-}
+function saveTeams(t) { localStorage.setItem(STORAGE_TEAMS, JSON.stringify(t)); }
 
-// ─── TEAM SELECTOR (screen nou) ──────────────────────────────
+// ── TEAM SELECTOR ──────────────────────────────────────────────
 function renderTeamSelector() {
-  const teams = getTeams();
-  const sel   = document.getElementById('teamSelector');
-  const saved = localStorage.getItem(STORAGE_ACTIVE);
+  const teams  = getTeams();
+  const saved  = localStorage.getItem(STORAGE_ACTIVE);
   activeTeamIdx = saved !== null ? parseInt(saved) : null;
+  activeSide    = localStorage.getItem(STORAGE_SIDE) || 'home';
 
+  const sel = document.getElementById('teamSelector');
   sel.innerHTML = '';
 
-  // "Cap" chip
+  // Cap chip
   const none = document.createElement('button');
   none.className = 'team-chip' + (activeTeamIdx === null ? ' active' : '');
   none.textContent = 'Cap / Manual';
@@ -242,15 +217,15 @@ function renderTeamSelector() {
   teams.forEach((t, i) => {
     const chip = document.createElement('button');
     chip.className = 'team-chip' + (activeTeamIdx === i ? ' active' : '');
-    chip.textContent = t.shortName || t.name;
+    chip.textContent = t.shortName || t.name.split(' ').slice(-1)[0]; // last word as short
     chip.onclick = () => selectTeamChip(i);
     sel.appendChild(chip);
   });
 
   if (teams.length < 3) {
     const add = document.createElement('button');
-    add.className = 'team-chip add-team';
-    add.textContent = '+ Afegir equip';
+    add.className = 'team-chip add-btn';
+    add.textContent = '+ Afegir';
     add.onclick = () => showScreen('myteam');
     sel.appendChild(add);
   }
@@ -261,98 +236,149 @@ function renderTeamSelector() {
 function selectTeamChip(idx) {
   activeTeamIdx = idx;
   if (idx === null) localStorage.removeItem(STORAGE_ACTIVE);
-  else localStorage.setItem(STORAGE_ACTIVE, idx);
+  else              localStorage.setItem(STORAGE_ACTIVE, idx);
   renderTeamSelector();
 }
 
+function selectSide(side) {
+  activeSide = side;
+  localStorage.setItem(STORAGE_SIDE, side);
+  document.getElementById('sideHome').classList.toggle('active', side === 'home');
+  document.getElementById('sideAway').classList.toggle('active', side === 'away');
+  applyActiveTeam();
+}
+
 function applyActiveTeam() {
-  const teams   = getTeams();
-  const manual  = document.getElementById('manualTeamSection');
-  const homeIn  = document.getElementById('teamHome');
-  const playersIn = document.getElementById('homePlayersInput');
+  const teams    = getTeams();
+  const toggle   = document.getElementById('sideToggle');
+  const homeIn   = document.getElementById('teamHome');
+  const awayIn   = document.getElementById('teamAway');
+  const playersIn= document.getElementById('homePlayersInput');
+  const manualSec= document.getElementById('manualPlayersSection');
 
   if (activeTeamIdx !== null && teams[activeTeamIdx]) {
     const t = teams[activeTeamIdx];
-    homeIn.value    = t.name;
-    playersIn.value = t.players.map(p => p.num + ' ' + p.name).join('\n');
-    manual.style.opacity = '.5';
-    manual.style.pointerEvents = 'none';
+    toggle.style.display = 'block';
+
+    // Update side buttons visually
+    document.getElementById('sideHome').classList.toggle('active', activeSide === 'home');
+    document.getElementById('sideAway').classList.toggle('active', activeSide === 'away');
+
+    if (activeSide === 'home') {
+      homeIn.value          = t.name;
+      homeIn.disabled       = true;
+      homeIn.style.opacity  = '.5';
+      awayIn.disabled       = false;
+      awayIn.style.opacity  = '1';
+      if (!awayIn.value) awayIn.value = '';
+    } else {
+      awayIn.value          = t.name;
+      awayIn.disabled       = true;
+      awayIn.style.opacity  = '.5';
+      homeIn.disabled       = false;
+      homeIn.style.opacity  = '1';
+      if (!homeIn.value) homeIn.value = '';
+    }
+
+    // Hide manual players section — we use saved team
+    manualSec.style.display = 'none';
   } else {
-    manual.style.opacity  = '1';
-    manual.style.pointerEvents = 'auto';
+    toggle.style.display    = 'none';
+    homeIn.disabled         = false;
+    homeIn.style.opacity    = '1';
+    awayIn.disabled         = false;
+    awayIn.style.opacity    = '1';
+    manualSec.style.display = 'block';
   }
 }
 
-// ─── MY TEAM SCREEN ──────────────────────────────────────────
+// ── MY TEAM SCREEN ─────────────────────────────────────────────
 function renderMyTeam() {
   const teams = getTeams();
-  const el = document.getElementById('myteamContent');
-  let html = '';
+  const el    = document.getElementById('myteamContent');
+  let html    = '';
 
   if (teams.length === 0) {
-    html += `<p style="color:var(--text3);font-size:13px;margin-bottom:16px">Encara no tens cap equip configurat. Afegeix el teu primer equip!</p>`;
+    html += `<p style="color:var(--text3);font-size:13px;margin-bottom:16px">Cap equip configurat. Afegeix el teu primer equip!</p>`;
   }
 
   teams.forEach((t, i) => {
     const tags = t.players.map(p =>
-      `<span class="player-tag"><span class="tag-num">${p.num}</span>${p.name.split(' ')[0]}</span>`
+      `<span class="player-tag"><span class="tag-num">${p.num}</span>${p.name.split(' ').slice(0,2).join(' ')}</span>`
     ).join('');
     html += `
-      <div class="my-team-card">
+      <div class="my-team-card" id="card-${i}">
         <div class="my-team-card-header">
           <span class="my-team-card-name">${t.name}</span>
           <div class="my-team-actions">
-            <button class="btn-secondary btn-sm" onclick="showAddPlayer(${i})">+ Jugador</button>
+            <button class="btn-secondary btn-sm" onclick="toggleQuickAdd(${i})">+ Jugador</button>
             <button class="btn-secondary btn-sm" onclick="editTeam(${i})">✏️</button>
             <button class="btn-secondary btn-sm" onclick="deleteTeam(${i})" style="color:var(--red)">🗑</button>
           </div>
         </div>
-        <div>${tags}</div>
+        <div id="players-${i}">${tags}</div>
+        <div id="quickadd-${i}" style="display:none" class="quick-add-form">
+          <p class="lbl mb8">Jugador puntual</p>
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <input type="text" id="qnum-${i}" placeholder="#7" style="width:70px;flex-shrink:0">
+            <input type="text" id="qname-${i}" placeholder="NOM COGNOM">
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-primary" style="margin:0;flex:1;font-size:13px;padding:10px" onclick="saveQuickPlayer(${i})">Afegir</button>
+            <button class="btn-secondary" style="flex:1;justify-content:center;font-size:13px;padding:10px" onclick="toggleQuickAdd(${i})">Cancel·lar</button>
+          </div>
+        </div>
       </div>`;
   });
 
   if (teams.length < 3) {
     html += `
-      <div class="add-team-form" id="addTeamForm">
-        <h3>${teams.length === 0 ? 'Afegir el meu equip' : 'Afegir equip'}</h3>
+      <div class="add-team-form">
+        <h3 id="formTitle">Afegir equip</h3>
         <span class="lbl mb8">Nom de l'equip</span>
         <input type="text" id="newTeamName" placeholder="S.E. Sant Joan de Mata Preinfantil" class="mb14">
         <span class="lbl mb8">Jugadors (un per línia: #52 NOM COGNOM)</span>
-        <textarea id="newTeamPlayers" style="min-height:140px" class="mb14" placeholder="#52 BRAIS DURAN GARCIA&#10;#8 ERIC SEOANE QUIJADA&#10;#34 ERIC PIERA GUTES&#10;..."></textarea>
+        <textarea id="newTeamPlayers" style="min-height:140px" class="mb14" placeholder="BRAIS DURAN GARCIA&#10;ERIC SEOANE QUIJADA&#10;MARCOS PEREZ ALVAREZ&#10;..."></textarea>
         <button class="btn-primary" style="margin-top:0" onclick="saveNewTeam()">💾 GUARDAR EQUIP</button>
       </div>`;
-  } else {
-    html += `<p style="color:var(--text3);font-size:12px;text-align:center;margin-top:8px">Màxim 3 equips guardats.</p>`;
   }
 
   el.innerHTML = html;
+}
 
-  // Pre-fill if editing
-  if (window._editingTeamIdx !== undefined) {
-    const t = teams[window._editingTeamIdx];
-    document.getElementById('newTeamName').value    = t.name;
-    document.getElementById('newTeamPlayers').value = t.players.map(p => p.num + ' ' + p.name).join('\n');
-    window._editingTeamIdx = undefined;
-  }
+function toggleQuickAdd(i) {
+  const el = document.getElementById('quickadd-' + i);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  if (el.style.display === 'block') document.getElementById('qname-' + i).focus();
+}
+
+function saveQuickPlayer(i) {
+  const num  = document.getElementById('qnum-'  + i).value.trim();
+  const name = document.getElementById('qname-' + i).value.trim().toUpperCase();
+  if (!name) { alert('Introdueix el nom'); return; }
+  const teams    = getTeams();
+  const numClean = num ? (num.startsWith('#') ? num : '#' + num) : '';
+  const short    = n => n.split(' ').slice(0, 2).join(' ');
+  const already  = teams[i].players.some(p =>
+    (numClean && p.num === numClean) || short(p.name) === short(name)
+  );
+  if (already) { alert('Aquest jugador ja és a la llista'); return; }
+  teams[i].players.push({ num: numClean, name });
+  saveTeams(teams);
+  renderMyTeam();
+  renderTeamSelector();
 }
 
 function saveNewTeam() {
-  const name    = document.getElementById('newTeamName').value.trim();
-  const rawPlayers = document.getElementById('newTeamPlayers').value.trim();
+  const name    = (document.getElementById('newTeamName').value || '').trim();
+  const rawP    = (document.getElementById('newTeamPlayers').value || '').trim();
   if (!name) { alert('Introdueix el nom de l\'equip'); return; }
-
-  const players = parsePlayers(rawPlayers);
+  const players = parsePlayers(rawP);
   if (players.length === 0) { alert('Introdueix almenys un jugador'); return; }
-
-  const teams = getTeams();
-
-  if (window._editingTeamIdx !== undefined) {
-    teams[window._editingTeamIdx] = { name, players };
-    window._editingTeamIdx = undefined;
-  } else {
-    teams.push({ name, players });
-  }
-
+  const teams   = getTeams();
+  const editIdx = window._editIdx;
+  if (editIdx !== undefined) { teams[editIdx] = { name, players }; window._editIdx = undefined; }
+  else                         teams.push({ name, players });
   saveTeams(teams);
   renderMyTeam();
   renderTeamSelector();
@@ -360,55 +386,17 @@ function saveNewTeam() {
 
 function editTeam(i) {
   const teams = getTeams();
-  window._editingTeamIdx = i;
-  const el = document.getElementById('myteamContent');
-  // Scroll to form and pre-fill
+  window._editIdx = i;
   renderMyTeam();
-  const form = document.getElementById('addTeamForm');
-  if (form) {
-    document.getElementById('newTeamName').value    = teams[i].name;
-    document.getElementById('newTeamPlayers').value = teams[i].players.map(p => p.num + ' ' + p.name).join('\n');
-    form.scrollIntoView({behavior:'smooth'});
+  const nameEl    = document.getElementById('newTeamName');
+  const playersEl = document.getElementById('newTeamPlayers');
+  const titleEl   = document.getElementById('formTitle');
+  if (nameEl) {
+    nameEl.value    = teams[i].name;
+    playersEl.value = teams[i].players.map(p => p.num + ' ' + p.name).join('\n');
+    if (titleEl) titleEl.textContent = 'Editar equip';
+    nameEl.scrollIntoView({ behavior: 'smooth' });
   }
-}
-
-function showAddPlayer(teamIdx) {
-  const existing = document.getElementById('quickAddForm');
-  if (existing) { existing.remove(); return; }
-  const card = document.querySelectorAll('.my-team-card')[teamIdx];
-  const form = document.createElement('div');
-  form.id = 'quickAddForm';
-  form.style.cssText = 'background:var(--bg3);border:1px solid var(--acc);border-radius:10px;padding:14px;margin-top:10px';
-  form.innerHTML = `
-    <p style="font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Jugador puntual</p>
-    <div style="display:flex;gap:8px;margin-bottom:8px">
-      <input type="text" id="quickNum" placeholder="#7" style="width:70px;flex-shrink:0">
-      <input type="text" id="quickName" placeholder="MARCOS PEREZ">
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn-primary" style="margin:0;flex:1;font-size:13px;padding:10px" onclick="saveQuickPlayer(${teamIdx})">Afegir</button>
-      <button class="btn-secondary" style="flex:1;font-size:13px;padding:10px;justify-content:center" onclick="document.getElementById('quickAddForm').remove()">Cancel·lar</button>
-    </div>
-  `;
-  card.appendChild(form);
-  document.getElementById('quickNum').focus();
-}
-
-function saveQuickPlayer(teamIdx) {
-  const num  = document.getElementById('quickNum').value.trim();
-  const name = document.getElementById('quickName').value.trim().toUpperCase();
-  if (!name) { alert('Introdueix el nom del jugador'); return; }
-  const teams = getTeams();
-  const numClean = num ? (num.startsWith('#') ? num : '#'+num) : '';
-  // Check not already in team
-  const already = teams[teamIdx].players.some(p =>
-    (numClean && p.num === numClean) || p.name.split(' ').slice(0,2).join(' ') === name.split(' ').slice(0,2).join(' ')
-  );
-  if (already) { alert('Aquest jugador ja és a la llista'); return; }
-  teams[teamIdx].players.push({ num: numClean, name });
-  saveTeams(teams);
-  renderMyTeam();
-  renderTeamSelector();
 }
 
 function deleteTeam(i) {
@@ -416,94 +404,75 @@ function deleteTeam(i) {
   const teams = getTeams();
   teams.splice(i, 1);
   saveTeams(teams);
-  if (activeTeamIdx === i) {
-    activeTeamIdx = null;
-    localStorage.removeItem(STORAGE_ACTIVE);
-  }
+  if (activeTeamIdx === i) { activeTeamIdx = null; localStorage.removeItem(STORAGE_ACTIVE); }
   renderMyTeam();
   renderTeamSelector();
 }
 
-// ─── PARSE PLAYERS from textarea ─────────────────────────────
+// ── PARSE PLAYERS ──────────────────────────────────────────────
 function parsePlayers(raw) {
-  return raw.split('\n')
-    .map(l => l.trim()).filter(Boolean)
-    .map(l => {
-      const m = l.match(/^#?(\w+)\s+(.+)$/);
-      if (m) return { num: '#' + m[1], name: m[2].trim().toUpperCase() };
-      return { num: '', name: l.toUpperCase() };
-    });
+  return raw.split('\n').map(l => l.trim()).filter(Boolean).map(l => {
+    const m = l.match(/^#?(\w+)\s+(.+)$/);
+    if (m) return { num: '#' + m[1], name: m[2].trim().toUpperCase() };
+    return { num: '', name: l.toUpperCase() };
+  });
 }
 
-// ─── PARSE CHRONOLOGY ────────────────────────────────────────
-// Handles BOTH formats:
-//   "Min: 2 Període: 1 Marcador: 0-2"   (single line)
-//   "Min: \n2\n Període: \n1\n Marcador: \n0-2"  (multiline, copied from web)
+// ── PARSE CHRONOLOGY ───────────────────────────────────────────
 function parseChronology(text) {
-  // Normalize: collapse multiline Min/Període/Marcador into single line
-  // Pattern: "Min: \n<digits>\n Període: \n<digits>\n Marcador: \n<score>"
-  let normalized = text
+  // Normalize multiline format from basquetcatala.cat:
+  // "Min: \n2\n Període: \n1\n Marcador: \n0-2" → "Min: 2 Període: 1 Marcador: 0-2"
+  let t = text
     .replace(/Min:\s*\n\s*(\d+)\s*\n\s*Per[íi]ode:\s*\n\s*(\d+)\s*\n\s*Marcador:\s*\n\s*(\d+-\d+)/gi,
              'Min: $1 Període: $2 Marcador: $3')
-    // Also handle partial multiline
-    .replace(/Min:\s*\n\s*(\d+)/gi,       'Min: $1')
-    .replace(/Per[íi]ode:\s*\n\s*(\d+)/gi,'Període: $1')
+    .replace(/Min:\s*\n\s*(\d+)/gi,        'Min: $1')
+    .replace(/Per[íi]ode:\s*\n\s*(\d+)/gi, 'Període: $1')
     .replace(/Marcador:\s*\n\s*(\d+-\d+)/gi,'Marcador: $1');
 
-  const lines  = normalized.split('\n').map(l => l.trim()).filter(Boolean);
-  const players = {};
-  const metaRE  = /Min:\s*(\d+)\s*Per[íi]ode:\s*(\d+)\s*Marcador:\s*(\d+)-(\d+)/i;
+  const lines    = t.split('\n').map(l => l.trim()).filter(Boolean);
+  const players  = {};
+  const metaRE   = /Min:\s*(\d+)\s*Per[íi]ode:\s*(\d+)\s*Marcador:\s*(\d+)-(\d+)/i;
   const playerRE = /^#(\S+)\s+(.+)$/;
-
-  let finalHome = 0, finalAway = 0;
+  const quarterScores = Array.from({length: NUM_PERIODS}, () => ({home:0, away:0}));
   let i = 0;
 
   while (i < lines.length) {
     const pm = lines[i].match(playerRE);
     if (!pm) { i++; continue; }
+    const num    = pm[1];
+    const name   = pm[2].trim().toUpperCase();
+    const action = lines[i + 1] || '';
+    const meta   = (lines[i + 2] || '').match(metaRE);
+    if (!meta) { i++; continue; }
 
-    const num     = pm[1];
-    const nameRaw = pm[2].trim();
-    const action  = lines[i + 1] || '';
-    const metaLine= lines[i + 2] || '';
-    const mm      = metaLine.match(metaRE);
+    const period = parseInt(meta[2]);
+    const minP   = parseInt(meta[1]);
+    const absMin = (period - 1) * PERIOD_MINS + minP;
+    const qIdx   = Math.min(period - 1, NUM_PERIODS - 1);
+    // Always overwrite — last action of each period wins (= final score of that quarter)
+    quarterScores[qIdx].home = parseInt(meta[3]);
+    quarterScores[qIdx].away = parseInt(meta[4]);
 
-    if (!mm) { i++; continue; }
-
-    const period    = parseInt(mm[2]);
-    const minInP    = parseInt(mm[1]);
-    const t         = (period - 1) * PERIOD_MINS + minInP;
-    finalHome = Math.max(finalHome, parseInt(mm[3]));
-    finalAway = Math.max(finalAway, parseInt(mm[4]));
-
-    const key = num;
+    // Use first 2 words of name as unique key — avoids dorsal collisions between teams
+    const key = name.split(' ').slice(0,2).join(' ');
     if (!players[key]) {
-      players[key] = {
-        num: '#' + num, name: nameRaw.toUpperCase(),
-        t2: 0, t3: 0, tl: 0, fouls: 0,
-        isHome: null,
-        intervals: [], onCourt: null
-      };
+      players[key] = { num:'#'+num, name, t2:0, t3:0, tl:0, fouls:0,
+                       isHome:null, intervals:[], onCourt:null };
     }
-    const p   = players[key];
-    const act = action.toLowerCase();
+    const p = players[key];
 
-    if (/cistella de 3/i.test(action))     p.t3++;
-    else if (/cistella de 2/i.test(action)) p.t2++;
-    else if (/cistella de 1/i.test(action)) p.tl++;
-
-    if (/falta/i.test(action) && !/sense falta/i.test(action)) p.fouls++;
-
-    if (/entra al camp/i.test(action)) p.onCourt = t;
+    if      (/cistella de 3/i.test(action))  p.t3++;
+    else if (/cistella de 2/i.test(action))  p.t2++;
+    else if (/cistella de 1/i.test(action))  p.tl++;
+    if (/falta/i.test(action) && !/fallat/i.test(action) && !/sense falta/i.test(action) && !/falta en atac/i.test(action)) p.fouls++;
+    if (/entra al camp/i.test(action))  p.onCourt = absMin;
     if (/surt del camp/i.test(action) && p.onCourt !== null) {
-      p.intervals.push([p.onCourt, t]);
+      p.intervals.push([p.onCourt, absMin]);
       p.onCourt = null;
     }
-
     i += 3;
   }
 
-  // Close open intervals
   Object.values(players).forEach(p => {
     if (p.onCourt !== null) p.intervals.push([p.onCourt, NUM_PERIODS * PERIOD_MINS]);
     p.pts  = p.t2 * 2 + p.t3 * 3 + p.tl;
@@ -512,122 +481,151 @@ function parseChronology(text) {
       : (p.pts > 0 || p.fouls > 0 ? PERIOD_MINS : 0);
   });
 
-  // Use last marcador as final score
-  const allMetas = [...text.matchAll(/Marcador:\s*\n?\s*(\d+)-(\d+)/gi)];
-  if (allMetas.length) {
-    const last = allMetas[allMetas.length - 1];
-    finalHome = parseInt(last[1]);
-    finalAway = parseInt(last[2]);
-  }
-
-  return { players: Object.values(players), finalHome, finalAway };
+  // Store quarter scores for banner
+  // We'll attach them to the returned array as a property
+  const result = Object.values(players);
+  result._quarterScores = quarterScores;
+  return result;
 }
 
-// ─── ASSIGN HOME/AWAY ─────────────────────────────────────────
-// Match by dorsal OR nom+primer cognom (ignora segon cognom)
-function playerMatchesRef(playerName, refName) {
-  const short = n => n.trim().toUpperCase().split(/\s+/).slice(0,2).join(' ');
-  if (short(playerName) === short(refName)) return true;
-  // Fallback: totes les paraules >3 lletres del ref apareixen al nom
-  const words = refName.toUpperCase().split(/\s+/).filter(w => w.length > 3);
-  return words.length > 0 && words.every(w => playerName.toUpperCase().includes(w));
+// ── ASSIGN HOME/AWAY ───────────────────────────────────────────
+function nameMatches(playerName, refName) {
+  // Compare only first name + first surname (first 2 words)
+  const short = n => n.trim().toUpperCase().split(/\s+/).slice(0, 2).join(' ');
+  return short(playerName) === short(refName);
 }
 
-function assignTeams(players, homePhrases) {
-  if (!homePhrases || homePhrases.length === 0) return;
+function assignTeams(players, myPhrases, myIsHome) {
+  if (!myPhrases || myPhrases.length === 0) return;
   players.forEach(p => {
-    const numClean    = p.num.replace('#','');
-    const matchByNum  = homePhrases.some(ph => ph.num && ph.num.replace('#','') === numClean);
-    const matchByName = homePhrases.some(ph => ph.name && playerMatchesRef(p.name, ph.name));
-    p.isHome = (matchByNum || matchByName) ? true : false;
+    // Match purely by name (first name + first surname) — dorsal ignored to avoid
+    // collisions when rival has a player with the same number
+    const byName = myPhrases.some(ph => ph.name && nameMatches(p.name, ph.name));
+    p.isHome = byName ? myIsHome : !myIsHome;
   });
 }
 
-// ─── PROCESS & RENDER ─────────────────────────────────────────
+// ── PROCESS DATA ───────────────────────────────────────────────
 function processData() {
-  const text      = document.getElementById('chronoInput').value.trim();
-  const errEl     = document.getElementById('errorMsg');
+  const text  = document.getElementById('chronoInput').value.trim();
+  const errEl = document.getElementById('errorMsg');
   errEl.style.display = 'none';
 
   if (!text) {
-    errEl.textContent = 'Enganxa la cronologia del partit.';
+    errEl.textContent   = 'Enganxa la cronologia del partit.';
     errEl.style.display = 'block';
     return;
   }
 
-  const { players, finalHome, finalAway } = parseChronology(text);
-
+  const players = parseChronology(text);
+  const quarterScores = players._quarterScores || [];
   if (players.length === 0) {
-    errEl.textContent = 'No s\'han trobat jugadors. Comprova el format de la cronologia.';
+    errEl.textContent   = 'No s\'han trobat jugadors. Comprova el format de la cronologia.';
     errEl.style.display = 'block';
     return;
   }
 
-  // Get team names & home players
-  let teamHome = document.getElementById('teamHome').value.trim() || 'Equip local';
-  let teamAway = document.getElementById('teamAway').value.trim() || 'Equip visitant';
-
-  const teams = getTeams();
-  let homePhrases = [];
+  const teams  = getTeams();
+  let myPhrases = [];
+  let teamHome  = document.getElementById('teamHome').value.trim() || 'Equip local';
+  let teamAway  = document.getElementById('teamAway').value.trim() || 'Equip visitant';
 
   if (activeTeamIdx !== null && teams[activeTeamIdx]) {
-    const t = teams[activeTeamIdx];
-    teamHome    = t.name;
-    homePhrases = t.players;
+    const t  = teams[activeTeamIdx];
+    myPhrases = t.players;
+    if (activeSide === 'home') teamHome = t.name;
+    else                       teamAway = t.name;
   } else {
     const raw = document.getElementById('homePlayersInput').value.trim();
-    if (raw) homePhrases = parsePlayers(raw);
+    if (raw) myPhrases = parsePlayers(raw);
   }
 
-  assignTeams(players, homePhrases);
+  // myIsHome: true if my team plays as local
+  const myIsHome = activeSide === 'home';
+  assignTeams(players, myPhrases, myIsHome);
 
-  // Split: players marked isHome=true → home, false → away, null → split evenly
   let homePlayers = players.filter(p => p.isHome === true);
   let awayPlayers = players.filter(p => p.isHome === false);
   const unknown   = players.filter(p => p.isHome === null);
 
-  // If no separation was possible, put all unknown in a single "all players" group
   if (homePlayers.length === 0 && awayPlayers.length === 0) {
     homePlayers = unknown;
   } else {
     awayPlayers = [...awayPlayers, ...unknown];
   }
 
-  currentData = { homePlayers, awayPlayers, finalHome, finalAway, teamHome, teamAway };
+  // Score = sum of player points (more accurate than text marcador)
+  const scoreH = homePlayers.reduce((s, p) => s + p.pts, 0);
+  const scoreA = awayPlayers.reduce((s, p) => s + p.pts, 0);
+
+  currentData = { homePlayers, awayPlayers, scoreH, scoreA, teamHome, teamAway, quarterScores };
   saveToHistory(currentData);
   renderResults(currentData);
-
   document.getElementById('nav-results').style.display = '';
   showScreen('results');
 }
 
-// ─── RENDER RESULTS ───────────────────────────────────────────
+// ── RENDER RESULTS ─────────────────────────────────────────────
+function buildQuartersBanner(data) {
+  const { homePlayers, awayPlayers, teamHome, teamAway } = data;
+  if (!data.quarterScores) return '';
+
+  const qs = data.quarterScores;
+  const initials = name => name.trim().split(/\s+/).map(w => w[0]).slice(0,3).join('').toUpperCase();
+  const hInit = initials(teamHome);
+  const aInit = initials(teamAway);
+
+  const hCells = qs.map((q,i) => `<td>${q.home}</td>`).join('');
+  const aCells = qs.map((q,i) => `<td>${q.away}</td>`).join('');
+  const headers = qs.map((_,i) => `<th>Q${i+1}</th>`).join('');
+
+  return `
+    <table style="width:100%;border-collapse:collapse;font-size:11px;margin-top:10px;border-top:.5px solid rgba(255,255,255,0.07)">
+      <thead>
+        <tr>
+          <th style="text-align:left;width:13%;padding:5px 0 2px;font-size:10px;color:var(--color-text-tertiary);font-weight:500"></th>
+          ${headers}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--color-text-secondary);padding:3px 0">${hInit}</td>
+          ${hCells}
+        </tr>
+        <tr>
+          <td style="text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--color-text-secondary);padding:3px 0">${aInit}</td>
+          ${aCells}
+        </tr>
+      </tbody>
+    </table>`;
+}
+
 function renderResults(data) {
-  const { homePlayers, awayPlayers, finalHome, finalAway, teamHome, teamAway } = data;
+  const { homePlayers, awayPlayers, scoreH, scoreA, teamHome, teamAway } = data;
   const allP   = [...homePlayers, ...awayPlayers];
   const top    = [...allP].sort((a, b) => b.pts - a.pts)[0];
   const totalF = allP.reduce((s, p) => s + p.fouls, 0);
-  const winner = finalHome > finalAway ? 'home' : finalAway > finalHome ? 'away' : '';
+  const winner = scoreH > scoreA ? 'home' : scoreA > scoreH ? 'away' : '';
 
   document.getElementById('resultsContent').innerHTML = `
     <div class="score-card">
       <div class="score-teams">
         <div class="score-team">
           <div class="score-team-name">${teamHome}</div>
-          <div class="score-num ${winner==='home'?'winner':''}">${finalHome}</div>
+          <div class="score-num ${winner==='home'?'winner':''}">${scoreH}</div>
         </div>
         <div class="score-sep">–</div>
         <div class="score-team">
           <div class="score-team-name">${teamAway}</div>
-          <div class="score-num ${winner==='away'?'winner':''}">${finalAway}</div>
+          <div class="score-num ${winner==='away'?'winner':''}">${scoreA}</div>
         </div>
       </div>
       <div class="score-meta">8 períodes × 6 min · ${allP.length} jugadors</div>
+      ${buildQuartersBanner(data)}
     </div>
-
     <div class="stat-row">
       <div class="stat-mini">
-        <div class="stat-mini-val">${finalHome + finalAway}</div>
+        <div class="stat-mini-val">${scoreH + scoreA}</div>
         <div class="stat-mini-lbl">Punts totals</div>
       </div>
       <div class="stat-mini">
@@ -635,42 +633,37 @@ function renderResults(data) {
         <div class="stat-mini-lbl">Faltes totals</div>
       </div>
       <div class="stat-mini">
-        <div class="stat-mini-val" style="font-size:16px;padding-top:2px">${top ? top.name.split(' ')[0] : '–'}</div>
+        <div class="stat-mini-val" style="font-size:15px;padding-top:4px">${top ? top.name.split(' ')[0] : '–'}</div>
         <div class="stat-mini-lbl">${top ? top.pts + ' pts' : ''}</div>
       </div>
     </div>
-
-    ${buildTeamBlock(homePlayers, teamHome, finalHome)}
-    ${buildTeamBlock(awayPlayers, teamAway, finalAway)}
-
+    ${buildTeamBlock(homePlayers, teamHome, scoreH)}
+    ${buildTeamBlock(awayPlayers, teamAway, scoreA)}
     <div class="btn-row">
       <button class="btn-secondary" onclick="exportCSV()">↓ CSV</button>
       <button class="btn-secondary" onclick="shareResults()">↑ Compartir</button>
       <button class="btn-secondary" onclick="newMatch()">+ Nou</button>
-    </div>
-  `;
+    </div>`;
 }
 
-function v(val) { return val > 0 ? val : `<span class="zero">–</span>`; }
+function z(val) { return val > 0 ? val : '<span class="zero">–</span>'; }
 
 function buildTeamBlock(players, name, pts) {
   if (!players.length) return '';
   const sorted = [...players].sort((a, b) => b.pts - a.pts);
-  const rows = sorted.map(p => {
+  const rows   = sorted.map(p => {
     const fc = p.fouls >= 5 ? 'foul-out' : p.fouls >= 4 ? 'foul-hi' : '';
     return `<tr>
       <td><span class="num-badge">${p.num}</span>${p.name.split(' ').slice(0,2).join(' ')}</td>
       <td class="${p.pts >= 10 ? 'pts-hi' : ''}">${p.pts}</td>
-      <td>${v(p.t2)}</td><td>${v(p.t3)}</td><td>${v(p.tl)}</td>
-      <td class="${fc}">${p.fouls > 0 ? p.fouls + (p.fouls >= 5 ? ' ✕' : '') : '<span class="zero">–</span>'}</td>
-      <td>${p.mins > 0 ? p.mins + "'" : '<span class="zero">–</span>'}</td>
+      <td>${z(p.t2)}</td><td>${z(p.t3)}</td><td>${z(p.tl)}</td>
+      <td class="${fc}">${p.fouls > 0 ? p.fouls+(p.fouls>=5?' ✕':'') : '<span class="zero">–</span>'}</td>
+      <td>${p.mins > 0 ? p.mins+"'" : '<span class="zero">–</span>'}</td>
     </tr>`;
   }).join('');
-
-  const tot = players.reduce((s, p) => ({
-    pts: s.pts+p.pts, t2: s.t2+p.t2, t3: s.t3+p.t3, tl: s.tl+p.tl, fouls: s.fouls+p.fouls
+  const tot = players.reduce((s,p) => ({
+    pts:s.pts+p.pts,t2:s.t2+p.t2,t3:s.t3+p.t3,tl:s.tl+p.tl,fouls:s.fouls+p.fouls
   }), {pts:0,t2:0,t3:0,tl:0,fouls:0});
-
   return `
     <div class="team-block">
       <div class="team-block-header">
@@ -679,7 +672,7 @@ function buildTeamBlock(players, name, pts) {
       </div>
       <table>
         <thead><tr>
-          <th style="width:38%">Jugador</th>
+          <th style="width:37%">Jugador</th>
           <th>Pts</th><th>T2</th><th>T3</th><th>TL</th><th>F</th><th>Min</th>
         </tr></thead>
         <tbody>
@@ -699,14 +692,14 @@ function newMatch() {
   showScreen('nou');
 }
 
-// ─── EXPORT / SHARE ───────────────────────────────────────────
+// ── EXPORT / SHARE ─────────────────────────────────────────────
 function exportCSV() {
   if (!currentData) return;
   const { homePlayers, awayPlayers, teamHome, teamAway } = currentData;
   const rows = [['Equip','Núm','Nom','Pts','T2','T3','TL','Faltes','Minuts']];
   [...homePlayers.map(p=>({...p,team:teamHome})), ...awayPlayers.map(p=>({...p,team:teamAway}))]
     .sort((a,b) => b.pts - a.pts)
-    .forEach(p => rows.push([p.team, p.num, p.name, p.pts, p.t2, p.t3, p.tl, p.fouls, p.mins]));
+    .forEach(p => rows.push([p.team,p.num,p.name,p.pts,p.t2,p.t3,p.tl,p.fouls,p.mins]));
   const csv = rows.map(r => r.map(v => '"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   const a   = document.createElement('a');
   a.href    = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
@@ -716,14 +709,14 @@ function exportCSV() {
 
 function shareResults() {
   if (!currentData) return;
-  const { finalHome, finalAway, teamHome, teamAway, homePlayers, awayPlayers } = currentData;
-  const top = [...homePlayers, ...awayPlayers].sort((a,b)=>b.pts-a.pts).slice(0,3);
-  const text = `🏀 ${teamHome} ${finalHome} – ${finalAway} ${teamAway}\n\nTop anotadors:\n${top.map((p,i)=>`${i+1}. ${p.name.split(' ')[0]} – ${p.pts} pts (T2:${p.t2} T3:${p.t3} TL:${p.tl})`).join('\n')}\n\n📊 StatsBall`;
-  if (navigator.share) navigator.share({ title: 'Estadístiques', text });
+  const { scoreH, scoreA, teamHome, teamAway, homePlayers, awayPlayers } = currentData;
+  const top  = [...homePlayers,...awayPlayers].sort((a,b)=>b.pts-a.pts).slice(0,3);
+  const text = `🏀 ${teamHome} ${scoreH} – ${scoreA} ${teamAway}\n\nTop:\n${top.map((p,i)=>`${i+1}. ${p.name.split(' ')[0]} – ${p.pts}pts (T2:${p.t2} T3:${p.t3} TL:${p.tl})`).join('\n')}\n\n📊 StatsBall`;
+  if (navigator.share) navigator.share({ title:'Estadístiques', text });
   else { navigator.clipboard?.writeText(text); alert('Copiat al portapapers!'); }
 }
 
-// ─── HISTORY ─────────────────────────────────────────────────
+// ── HISTORY ────────────────────────────────────────────────────
 function saveToHistory(data) {
   const h = JSON.parse(localStorage.getItem(STORAGE_HIST) || '[]');
   h.unshift({ ...data, date: new Date().toLocaleDateString('ca-ES') });
@@ -734,17 +727,17 @@ function renderHistory() {
   const h  = JSON.parse(localStorage.getItem(STORAGE_HIST) || '[]');
   const el = document.getElementById('historyContent');
   if (!h.length) {
-    el.innerHTML = '<div class="history-empty">Encara no hi ha partits guardats.<br>Analitza el teu primer partit!</div>';
+    el.innerHTML = '<div class="history-empty">Cap partit guardat encara.<br>Analitza el teu primer partit!</div>';
     return;
   }
   el.innerHTML = h.map((d, i) => `
     <div class="history-item" onclick="loadHistory(${i})">
-      <div class="history-left">
-        <div class="history-date">${d.date}</div>
+      <div>
+        <div class="history-date">${d.date || ''}</div>
         <div class="history-teams">${d.teamHome} vs ${d.teamAway}</div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="history-score">${d.finalHome}–${d.finalAway}</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="history-score">${d.scoreH ?? d.finalHome ?? '?'}–${d.scoreA ?? d.finalAway ?? '?'}</div>
         <button class="history-del" onclick="event.stopPropagation();deleteHistory(${i})">✕</button>
       </div>
     </div>`).join('');
@@ -753,6 +746,11 @@ function renderHistory() {
 function loadHistory(i) {
   const h = JSON.parse(localStorage.getItem(STORAGE_HIST) || '[]');
   currentData = h[i];
+  // Backwards compat: if old entry used finalHome/finalAway
+  if (!('scoreH' in currentData)) {
+    currentData.scoreH = currentData.finalHome || 0;
+    currentData.scoreA = currentData.finalAway || 0;
+  }
   renderResults(currentData);
   document.getElementById('nav-results').style.display = '';
   showScreen('results');
@@ -765,12 +763,11 @@ function deleteHistory(i) {
   renderHistory();
 }
 
-// ─── INIT ─────────────────────────────────────────────────────
+// ── INIT ───────────────────────────────────────────────────────
 function init() {
-  // Pre-load default team if none saved
   const teams = getTeams();
   if (teams.length === 0) {
-    const defaultTeam = {
+    saveTeams([{
       name: 'S.E. Sant Joan de Mata Preinfantil',
       players: [
         {num:'#52', name:'BRAIS DURAN GARCIA'},
@@ -780,20 +777,15 @@ function init() {
         {num:'#25', name:'NIKOLOZ GIORGASHVILI'},
         {num:'#66', name:'JORDI RAYA GUERRERO'},
         {num:'#16', name:'MARC PANIAGUA VIDALES'},
-        {num:'#7',  name:'MARCOS PEREZ ALVAREZ'},
         {num:'#10', name:'DAMIAN MUSASHI NECHITA CRUZ'},
+        {num:'#7',  name:'MARCOS PEREZ ALVAREZ'},
       ]
-    };
-    saveTeams([defaultTeam]);
+    }]);
     localStorage.setItem(STORAGE_ACTIVE, '0');
     activeTeamIdx = 0;
   }
-
   renderTeamSelector();
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
-  }
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 
 init();
