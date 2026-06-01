@@ -149,8 +149,17 @@ tbody td:first-child{text-align:left}
     <!-- ── NOU PARTIT ── -->
     <div class="screen active" id="screen-nou">
 
-      <span class="lbl mb8">Equip local (el meu equip)</span>
+      <span class="lbl mb8">El meu equip</span>
       <div class="team-selector" id="teamSelector"></div>
+
+      <!-- Local / Visitant toggle - only shown when a saved team is active -->
+      <div id="sideToggle" style="display:none;margin-bottom:14px">
+        <span class="lbl mb8">El meu equip juga com a...</span>
+        <div style="display:flex;gap:8px">
+          <button id="sideHome" class="btn-secondary" style="flex:1;justify-content:center;font-size:13px" onclick="selectSide('home')">🏠 Local</button>
+          <button id="sideAway" class="btn-secondary" style="flex:1;justify-content:center;font-size:13px" onclick="selectSide('away')">✈️ Visitant</button>
+        </div>
+      </div>
 
       <div id="manualTeamSection">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="mb14">
@@ -568,25 +577,35 @@ function processData() {
   let teamAway = document.getElementById('teamAway').value.trim() || 'Equip visitant';
 
   const teams = getTeams();
-  let homePhrases = [];
+  let myPhrases = [];
 
   if (activeTeamIdx !== null && teams[activeTeamIdx]) {
-    const t = teams[activeTeamIdx];
-    teamHome    = t.name;
-    homePhrases = t.players;
+    const t  = teams[activeTeamIdx];
+    myPhrases = t.players;
+    if (activeSide === 'home') teamHome = t.name;
+    else                       teamAway = t.name;
   } else {
     const raw = document.getElementById('homePlayersInput').value.trim();
-    if (raw) homePhrases = parsePlayers(raw);
+    if (raw) myPhrases = parsePlayers(raw);
   }
 
-  assignTeams(players, homePhrases);
+  // assignTeams marks players as isHome based on myPhrases
+  // then we swap if myTeam is playing as visitor
+  assignTeams(players, myPhrases);
 
-  // Split: players marked isHome=true → home, false → away, null → split evenly
+  if (activeSide === 'away') {
+    // flip: my team (marked isHome=true) is actually the visitor
+    players.forEach(p => {
+      if (p.isHome === true)       p.isHome = false;
+      else if (p.isHome === false) p.isHome = true;
+    });
+  }
+
+  // Split
   let homePlayers = players.filter(p => p.isHome === true);
   let awayPlayers = players.filter(p => p.isHome === false);
   const unknown   = players.filter(p => p.isHome === null);
 
-  // If no separation was possible, put all unknown in a single "all players" group
   if (homePlayers.length === 0 && awayPlayers.length === 0) {
     homePlayers = unknown;
   } else {
@@ -604,22 +623,25 @@ function processData() {
 // ─── RENDER RESULTS ───────────────────────────────────────────
 function renderResults(data) {
   const { homePlayers, awayPlayers, finalHome, finalAway, teamHome, teamAway } = data;
-  const allP   = [...homePlayers, ...awayPlayers];
-  const top    = [...allP].sort((a, b) => b.pts - a.pts)[0];
-  const totalF = allP.reduce((s, p) => s + p.fouls, 0);
-  const winner = finalHome > finalAway ? 'home' : finalAway > finalHome ? 'away' : '';
+  const allP    = [...homePlayers, ...awayPlayers];
+  const top     = [...allP].sort((a, b) => b.pts - a.pts)[0];
+  const totalF  = allP.reduce((s, p) => s + p.fouls, 0);
+  // Use sum of player points for scoreboard (more accurate than text marcador)
+  const scoreH  = homePlayers.reduce((s, p) => s + p.pts, 0);
+  const scoreA  = awayPlayers.reduce((s, p) => s + p.pts, 0);
+  const winner  = scoreH > scoreA ? 'home' : scoreA > scoreH ? 'away' : '';
 
   document.getElementById('resultsContent').innerHTML = `
     <div class="score-card">
       <div class="score-teams">
         <div class="score-team">
           <div class="score-team-name">${teamHome}</div>
-          <div class="score-num ${winner==='home'?'winner':''}">${finalHome}</div>
+          <div class="score-num ${winner==='home'?'winner':''}">${scoreH}</div>
         </div>
         <div class="score-sep">–</div>
         <div class="score-team">
           <div class="score-team-name">${teamAway}</div>
-          <div class="score-num ${winner==='away'?'winner':''}">${finalAway}</div>
+          <div class="score-num ${winner==='away'?'winner':''}">${scoreA}</div>
         </div>
       </div>
       <div class="score-meta">8 períodes × 6 min · ${allP.length} jugadors</div>
@@ -627,7 +649,7 @@ function renderResults(data) {
 
     <div class="stat-row">
       <div class="stat-mini">
-        <div class="stat-mini-val">${finalHome + finalAway}</div>
+        <div class="stat-mini-val">${scoreH + scoreA}</div>
         <div class="stat-mini-lbl">Punts totals</div>
       </div>
       <div class="stat-mini">
