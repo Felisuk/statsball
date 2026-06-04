@@ -453,8 +453,8 @@ function parseChronology(text) {
     quarterScores[qIdx].home = parseInt(meta[3]);
     quarterScores[qIdx].away = parseInt(meta[4]);
 
-    // Use first 2 words of name as unique key — avoids dorsal collisions between teams
-    const key = name.split(' ').slice(0,2).join(' ');
+    // Use normalized (no accents) first 2 words as unique key
+    const key = removeDiacritics(name).split(' ').slice(0,2).join(' ');
     if (!players[key]) {
       players[key] = { num:'#'+num, name, t2:0, t3:0, tl:0, fouls:0,
                        isHome:null, intervals:[], onCourt:null };
@@ -489,10 +489,14 @@ function parseChronology(text) {
 }
 
 // ── ASSIGN HOME/AWAY ───────────────────────────────────────────
+function removeDiacritics(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 function nameMatches(playerName, refName) {
-  // Compare only first name + first surname (first 2 words)
-  const short = n => n.trim().toUpperCase().split(/\s+/).slice(0, 2).join(' ');
-  return short(playerName) === short(refName);
+  // Normalize accents + uppercase + first 2 words only
+  const norm = n => removeDiacritics(n.trim().toUpperCase()).split(/\s+/).slice(0, 2).join(' ');
+  return norm(playerName) === norm(refName);
 }
 
 function assignTeams(players, myPhrases, myIsHome) {
