@@ -10,6 +10,7 @@
 <title>StatsBall</title>
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{--bg:#080d1a;--bg2:#0f1629;--bg3:#151e36;--bg4:#1c2740;--acc:#f97316;--acc2:#fb923c;--text:#f0f4ff;--text2:#8896b3;--text3:#4a5568;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--border:rgba(255,255,255,0.07);--r:12px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -647,9 +648,12 @@ function renderResults(data) {
     ${buildTeamBlock(homePlayers, teamHome, scoreH)}
     ${buildTeamBlock(awayPlayers, teamAway, scoreA)}
     <div class="btn-row">
+      <button class="btn-secondary" onclick="exportPDF()">📄 PDF</button>
       <button class="btn-secondary" onclick="exportCSV()">↓ CSV</button>
-      <button class="btn-secondary" onclick="shareResults()">↑ Compartir</button>
       <button class="btn-secondary" onclick="newMatch()">+ Nou</button>
+    </div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn-secondary" style="width:100%;justify-content:center" onclick="shareResults()">↑ Compartir resum (text)</button>
     </div>`;
 }
 
@@ -712,6 +716,142 @@ function exportCSV() {
   a.href    = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
   a.download= 'estadistiques.csv';
   a.click();
+}
+
+function exportPDF() {
+  if (!currentData) return;
+  const { scoreH, scoreA, teamHome, teamAway, homePlayers, awayPlayers, quarterScores } = currentData;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+  const orange = [249, 115, 22];
+  const dark   = [20, 25, 40];
+  const gray   = [110, 120, 140];
+  const pageW  = doc.internal.pageSize.getWidth();
+  let y = 18;
+
+  // Header
+  doc.setFillColor(...orange);
+  doc.rect(0, 0, pageW, 4, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(18);
+  doc.setTextColor(...dark);
+  doc.text('StatsBall', 14, y);
+  doc.setFontSize(9);
+  doc.setTextColor(...gray);
+  doc.setFont('helvetica', 'normal');
+  doc.text(new Date().toLocaleDateString('ca-ES'), pageW - 14, y, { align: 'right' });
+  y += 10;
+
+  // Score
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(13);
+  doc.setTextColor(...dark);
+  doc.text(teamHome, 14, y);
+  doc.text(teamAway, pageW - 14, y, { align: 'right' });
+  y += 11;
+  doc.setFontSize(28);
+  doc.setTextColor(scoreH >= scoreA ? orange[0] : dark[0], scoreH >= scoreA ? orange[1] : dark[1], scoreH >= scoreA ? orange[2] : dark[2]);
+  doc.text(String(scoreH), 14, y);
+  doc.setTextColor(scoreA > scoreH ? orange[0] : dark[0], scoreA > scoreH ? orange[1] : dark[1], scoreA > scoreH ? orange[2] : dark[2]);
+  doc.text(String(scoreA), pageW - 14, y, { align: 'right' });
+  doc.setFontSize(13);
+  doc.setTextColor(...gray);
+  doc.text('–', pageW / 2, y - 4, { align: 'center' });
+  y += 6;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...gray);
+  doc.text('8 períodes × 6 min · ' + (homePlayers.length + awayPlayers.length) + ' jugadors', 14, y);
+  y += 8;
+
+  // Quarter scores table
+  if (quarterScores && quarterScores.length) {
+    const initials = name => name.trim().split(/\s+/).map(w => w[0]).slice(0,3).join('').toUpperCase();
+    const colW = (pageW - 28 - 18) / 8;
+    doc.setDrawColor(220,220,220);
+    doc.line(14, y, pageW - 14, y);
+    y += 5;
+    doc.setFontSize(7);
+    doc.setTextColor(...gray);
+    for (let i = 0; i < 8; i++) doc.text('Q'+(i+1), 14 + 18 + colW*i + colW/2, y, { align: 'center' });
+    y += 5;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...dark);
+    doc.text(initials(teamHome), 14, y);
+    doc.setFont('helvetica', 'normal');
+    quarterScores.forEach((q,i) => doc.text(String(q.home), 14 + 18 + colW*i + colW/2, y, { align: 'center' }));
+    y += 5.5;
+    doc.setFont('helvetica', 'bold');
+    doc.text(initials(teamAway), 14, y);
+    doc.setFont('helvetica', 'normal');
+    quarterScores.forEach((q,i) => doc.text(String(q.away), 14 + 18 + colW*i + colW/2, y, { align: 'center' }));
+    y += 6;
+    doc.line(14, y, pageW - 14, y);
+    y += 8;
+  }
+
+  function teamTable(title, players, totalPts) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(...dark);
+    doc.text(title, 14, y);
+    doc.setTextColor(...orange);
+    doc.text(totalPts + ' pts', pageW - 14, y, { align: 'right' });
+    y += 6;
+
+    const cols = [
+      { label: 'Jugador', x: 14,  align: 'left'  },
+      { label: 'Pts',     x: 110, align: 'right' },
+      { label: 'T2',      x: 128, align: 'right' },
+      { label: 'T3',      x: 144, align: 'right' },
+      { label: 'TL',      x: 160, align: 'right' },
+      { label: 'F',       x: 176, align: 'right' },
+      { label: 'Min',     x: 196, align: 'right' },
+    ];
+
+    doc.setFontSize(7.5);
+    doc.setTextColor(...gray);
+    doc.setFont('helvetica', 'bold');
+    cols.forEach(c => doc.text(c.label, c.x, y, { align: c.align }));
+    y += 1.5;
+    doc.setDrawColor(225,225,225);
+    doc.line(14, y, pageW - 14, y);
+    y += 4.5;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    const sorted = [...players].sort((a,b) => b.pts - a.pts);
+    sorted.forEach(p => {
+      doc.setTextColor(...dark);
+      doc.text(p.num + ' ' + p.name.split(' ').slice(0,2).join(' '), cols[0].x, y);
+      doc.text(String(p.pts), cols[1].x, y, { align: 'right' });
+      doc.setTextColor(...gray);
+      doc.text(p.t2 > 0 ? String(p.t2) : '–', cols[2].x, y, { align: 'right' });
+      doc.text(p.t3 > 0 ? String(p.t3) : '–', cols[3].x, y, { align: 'right' });
+      doc.text(p.tl > 0 ? String(p.tl) : '–', cols[4].x, y, { align: 'right' });
+      doc.text(p.fouls > 0 ? String(p.fouls) : '–', cols[5].x, y, { align: 'right' });
+      doc.text(p.mins > 0 ? p.mins + "'" : '–', cols[6].x, y, { align: 'right' });
+      y += 5.5;
+    });
+
+    y += 2;
+    doc.setDrawColor(225,225,225);
+    doc.line(14, y, pageW - 14, y);
+    y += 8;
+  }
+
+  teamTable(teamHome, homePlayers, scoreH);
+  teamTable(teamAway, awayPlayers, scoreA);
+
+  doc.setFontSize(7);
+  doc.setTextColor(...gray);
+  doc.text('Generat amb StatsBall', 14, 290);
+
+  const fileName = 'statsball_' + teamHome.replace(/\s+/g,'_') + '_vs_' + teamAway.replace(/\s+/g,'_') + '.pdf';
+  doc.save(fileName);
 }
 
 function shareResults() {
