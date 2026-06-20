@@ -270,14 +270,16 @@ function applyActiveTeam() {
       homeIn.style.opacity  = '.5';
       awayIn.disabled       = false;
       awayIn.style.opacity  = '1';
-      if (!awayIn.value) awayIn.value = '';
+      // Clear away field if it was holding the team name from a previous side switch
+      if (awayIn.value === t.name) awayIn.value = '';
     } else {
       awayIn.value          = t.name;
       awayIn.disabled       = true;
       awayIn.style.opacity  = '.5';
       homeIn.disabled       = false;
       homeIn.style.opacity  = '1';
-      if (!homeIn.value) homeIn.value = '';
+      // Clear home field if it was holding the team name from a previous side switch
+      if (homeIn.value === t.name) homeIn.value = '';
     }
 
     // Hide manual players section — we use saved team
@@ -297,6 +299,7 @@ function renderMyTeam() {
   const teams = getTeams();
   const el    = document.getElementById('myteamContent');
   let html    = '';
+
 
   if (teams.length === 0) {
     html += `<p style="color:var(--text3);font-size:13px;margin-bottom:16px">Cap equip configurat. Afegeix el teu primer equip!</p>`;
@@ -509,7 +512,7 @@ function assignTeams(players, myPhrases, myIsHome) {
   });
 }
 
-// ── PROCESS DATA ───────────────────────────────────────────────
+// ── PROCESS DATA ───────────────────────────────────────────────────
 function processData() {
   const text  = document.getElementById('chronoInput').value.trim();
   const errEl = document.getElementById('errorMsg');
