@@ -651,9 +651,6 @@ function renderResults(data) {
       <button class="btn-secondary" onclick="exportPDF()">📄 PDF</button>
       <button class="btn-secondary" onclick="exportCSV()">↓ CSV</button>
       <button class="btn-secondary" onclick="newMatch()">+ Nou</button>
-    </div>
-    <div class="btn-row" style="margin-top:8px">
-      <button class="btn-secondary" style="width:100%;justify-content:center" onclick="shareResults()">↑ Compartir resum (text)</button>
     </div>`;
 }
 
@@ -854,14 +851,7 @@ function exportPDF() {
   doc.save(fileName);
 }
 
-function shareResults() {
-  if (!currentData) return;
-  const { scoreH, scoreA, teamHome, teamAway, homePlayers, awayPlayers } = currentData;
-  const top  = [...homePlayers,...awayPlayers].sort((a,b)=>b.pts-a.pts).slice(0,3);
-  const text = `🏀 ${teamHome} ${scoreH} – ${scoreA} ${teamAway}\n\nTop:\n${top.map((p,i)=>`${i+1}. ${p.name.split(' ')[0]} – ${p.pts}pts (T2:${p.t2} T3:${p.t3} TL:${p.tl})`).join('\n')}\n\n📊 StatsBall`;
-  if (navigator.share) navigator.share({ title:'Estadístiques', text });
-  else { navigator.clipboard?.writeText(text); alert('Copiat al portapapers!'); }
-}
+
 
 // ── HISTORY ────────────────────────────────────────────────────
 function saveToHistory(data) {
